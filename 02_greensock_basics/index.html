@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>GreenSock Basics</title>
+  <style>
+
+  body{
+    background: #222;
+  }
+
+  .circle{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: blueviolet;
+    margin: 1em;
+  }
+
+  .square{
+    width: 200px;
+    height: 200px;
+    background: orange;
+    border-radius: 5px;
+    margin: 1em;
+  }
+  </style>
+</head>
+<body>
+  
+  <button>Start Animation</button>
+  <div class="circle"></div>
+  <div class="square"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
+  <script>
+
+  /*
+    Animating with GSAP 
+    With gsap you can either do simple point to point animations which are not dependent on other animations 
+    and have their own timing. These are called tweens 
+
+
+  */
+
+
+  
+  document.querySelector('button').addEventListener('click', () => {
+  
+    //The syntax of a tween is fairly simple
+    // 1. gsap calls the library
+    // 2. to / from / fromTo / set are methods that are supported with gsap and determine the direction of you tweens
+    // 3. as the first parameter is a string and is your selector ( the element or elements you wish to animate )
+    // 4. the next parameter is an object and contains the properties you wish to animate and the duration of the tween
+    gsap.to(".circle", {x: 100, duration: 1});
+
+    // You can also use jQuery or vanilla JS to selecto your elements and then use the variable as your first parameter
+    // const circle = document.querySelector('.circle')
+
+    // Example of from .. an animation from the given properties to the set properties
+    //gsap.from('.circle', {x: '1000%', duration : 2})
+
+    // a combination of from and to : requires 2 objects instead of one since you are setting 2 states (before and after) 
+    // gsap.fromTo('.circle', {x: 500, duration: 1}, {x: 1000, duration: 1})
+
+    // You can also add a delay by adding a 3rd parameter as a string with the delay you want in seconds
+    gsap.to('.circle', { y: 100, duration: 1}, "+=1")
+
+
+
+    // These are timelines
+    // timelines are sets of tweens which are set together
+
+    // Since you eventually want to control timelines it is best to initialize them in their own variable so that you can call them later
+    // The syntax is very similar, you are just chainging with '.' same as with jQuery
+    
+    const tl2  = gsap.timeline();
+    tl1.to('.circle',{x: 100, duration: 1})
+      .to('.circle',{y: 100, duration: 1})
+      .to('.square',{x: 0, y: 0, duration: 1})
+    
+
+    // You can have multiple timelines 
+    const tl1  = gsap.timeline(); 
+    tl2.to('.square',{y: 100, duration: 1})
+      .to('.square',{x: 100, duration: 1})
+      .to('.circle',{x: 0, y: 0, duration: 1}, '+=3')
+  })
+  
+  
+  </script>
+</body>
+</html>

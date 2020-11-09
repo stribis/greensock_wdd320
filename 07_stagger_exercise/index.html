@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Stagger</title>
+  <style>
+  /* === Small CSS Reset === */
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  *, *::after, *::before{
+    box-sizing: border-box;
+  }
+  body{
+    background: #222;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background: url(sae_logo.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .box{
+    background: white;
+    border: solid black 1px;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
+  <script>
+
+    // For this exercise we need to get the size of the page ( if you want to make this responsive, then add it in a resize event listener
+    // to make sure you save the width and height dynamically instead of just when the page loads)
+    const pageWidth = window.innerWidth
+    const pageHeight = window.innerHeight
+    // This variable determines how many squares we want in one row
+    const numberOfCols =  24
+    // Now we just need to do some math
+    const squareSize = Math.floor(pageWidth/numberOfCols)
+    const numberOfRows = Math.floor(pageHeight/squareSize)
+    const numberOfSquares = numberOfCols * numberOfRows
+    // And lastly add the squares to the page using a loop and creating a square for every iteration
+    for( let i = 0; i < numberOfSquares; i++){
+      const square  =  document.createElement('div')
+      square.setAttribute('class', 'box')
+      square.setAttribute('style', `width: ${squareSize}px; height: ${squareSize}px`)
+      document.querySelector('.container').append(square)
+    }
+
+    // Lets do a simple animation using stagger
+    gsap.to('.box',{
+      opacity: 0,
+      background: 'rgb(112,0,112)',
+      borderRadius: '50%',
+      scale: 0.1,
+      ease: 'ease.inOut',
+      y: 33,
+      // delay between iterations of the animation
+      repeatDelay: 1,
+      // makes it play forwards then backwards, like a yoyo
+      yoyo: true,
+      // makes the animation be infinite
+      repeat: -1,
+      stagger: {
+        amount: 2,
+        from: 'center',
+        // we can give gsap the information for our grid or we can just let it figure it out by itself by using auto
+        grid: 'auto'
+      }
+    })
+
+
+
+
+    
+  </script>
+</body>
+</html>

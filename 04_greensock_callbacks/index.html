@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>GreenSock Basics</title>
+  <style>
+
+  body{
+    background: #222;
+  }
+
+  .circle{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: blueviolet;
+    margin: 1em;
+  }
+
+  .square{
+    width: 200px;
+    height: 200px;
+    background: orange;
+    border-radius: 5px;
+    margin: 1em;
+  }
+  </style>
+</head>
+<body>
+  
+  <button>Start Animation</button>
+  <div class="circle"></div>
+  <div class="square"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
+  <script>
+  // With callbacks we can call funtions after certain events
+ // const circle = document.querySelector('.circle')
+  document.querySelector('button').addEventListener('click', () => {
+
+    const tl = gsap.timeline()
+    // the callbacks are added as in the object of properties you want to animate
+    // they are called 
+    // onStart
+    // onUpdate
+    // onComplete
+
+    // in this case we are just making them call some functions which are declared on the bottom of this script
+    tl.to('.circle', {x: 500, y: 500, duration: 1, onStart: animationStart})
+      .to('.circle', {x: 50, y: 50, duration: 1, onUpdate: animationFrame})
+      .to('.circle', {x: 1000, y: 1000, duration: 1, onComplete: animationDone})
+    
+  })
+
+  function animationStart () {
+    console.log('Animation has started')
+  }
+  
+
+  let counter = 0;
+  function animationFrame () {
+    counter++
+    console.log(`The second tween is playing and has played ${counter} frames`)
+
+  }
+
+  function animationDone () {
+    console.log('The animation is done')
+  }
+  
+  </script>
+</body>
+</html>
